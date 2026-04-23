@@ -1,468 +1,567 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#FFB399" />
-    <link rel="icon" href="icons/icon-192x192-A.png" type="image/png" /> 
+    
+    <link rel="icon" href="icons/logo.png" type="image/png" /> 
     <link rel="manifest" href="manifest.json"> 
-    
-    <title>Engleash - Master Your English</title>
+
+    <title>Engleash - Belajar Bahasa Inggris</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --header-bg: #FFB399;
-            --body-bg: #FFF0BE;
-            --card-bg: #ffffff;
-            --primary-accent: #e09b85;
-            --text-main: #2c3e50;
-            --text-muted: #5a5a5a;
-            --success: #27ae60;
-            --error: #e74c3c;
-        }
-
         body {
             font-family: 'Roboto Slab', serif;
-            background-color: var(--body-bg);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding-bottom: 40px;
+            background-color: #FFF0BE; 
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
 
-        /* Header Style */
-        .header {
-            background-color: var(--header-bg);
-            padding: 30px 20px;
+        header {
+            background-color: #FFB399; 
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
-            font-size: 2.8em;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 5px;
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #2c3e50;
         }
 
-        .header p {
+        header p {
+            margin: 5px 0 0 0;
             font-size: 1.1em;
-            color: var(--text-muted);
-            font-weight: 400;
+            color: #4a4a4a;
         }
 
-        /* Navigation Style */
-        .app-nav {
-            background-color: var(--primary-accent);
+        nav {
             display: flex;
             justify-content: center;
-            gap: 5px;
-            overflow-x: auto;
+            background-color: #e09b85;
             padding: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            flex-wrap: wrap;
         }
 
-        .nav-btn {
-            background: transparent;
+        nav button {
+            background-color: transparent;
             border: none;
-            color: white;
-            padding: 10px 20px;
             font-family: inherit;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 600;
+            color: #fff;
+            padding: 10px 15px;
             cursor: pointer;
-            border-radius: 8px;
             transition: 0.3s;
-            white-space: nowrap;
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background-color: white;
-            color: var(--primary-accent);
+        nav button:hover, nav button.active {
+            background-color: #fff;
+            color: #e09b85;
+            border-radius: 5px;
         }
 
         .container {
             max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        /* Learning Views Management */
-        .learning-view {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .learning-view.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Card Component */
-        .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(224, 155, 133, 0.2);
-        }
-
-        .card h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: var(--primary-accent);
-        }
-
-        .card p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-
-        /* Input Elements */
-        .eng-textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 1em;
-            margin-bottom: 15px;
-            background: #fdfdfd;
-        }
-
-        .eng-textarea:focus {
-            outline: none;
-            border-color: var(--header-bg);
-        }
-
-        .action-btn {
-            background-color: var(--header-bg);
-            color: var(--text-main);
-            border: none;
-            padding: 12px 25px;
-            font-family: inherit;
-            font-weight: 700;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-family: inherit;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button.action-btn {
+            background-color: #FFB399;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 5px;
         }
 
-        .action-btn:hover {
-            background-color: var(--primary-accent);
-            color: white;
-            transform: translateY(-2px);
+        button.action-btn:hover {
+            background-color: #e09b85;
+            color: #fff;
         }
 
-        /* Flashcard Component */
-        .flashcard-container {
+        .flashcard {
+            width: 100%;
+            height: 200px;
             perspective: 1000px;
-            height: 250px;
-            margin-bottom: 25px;
+            margin: 20px 0;
             cursor: pointer;
         }
-
         .flashcard-inner {
-            position: relative;
             width: 100%;
             height: 100%;
             transition: transform 0.6s;
             transform-style: preserve-3d;
+            position: relative;
         }
-
-        .flashcard-container.flip .flashcard-inner {
+        .flashcard.flip .flashcard-inner {
             transform: rotateY(180deg);
         }
-
-        .fc-side {
-            position: absolute;
+        .flashcard-front, .flashcard-back {
             width: 100%;
             height: 100%;
+            position: absolute;
             backface-visibility: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2em;
-            font-weight: 700;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 0 10px;
         }
-
-        .fc-front {
-            background: #fcfcfc;
-            color: var(--text-main);
-            border: 3px solid var(--header-bg);
+        .flashcard-front {
+            background-color: #f9f9f9;
+            color: #333;
+            border: 2px solid #FFB399;
         }
-
-        .fc-back {
-            background: var(--header-bg);
-            color: white;
+        .flashcard-back {
+            background-color: #FFB399;
+            color: #fff;
             transform: rotateY(180deg);
         }
 
-        /* Result Box */
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #f9f9f9;
-            border-left: 5px solid var(--primary-accent);
-            display: none;
-        }
-
-        /* Quiz UI */
-        .quiz-option {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: #fff;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .quiz-option:hover {
-            border-color: var(--header-bg);
-            background: rgba(255, 179, 153, 0.1);
-        }
-
-        .quiz-option input {
-            margin-right: 15px;
-            accent-color: var(--primary-accent);
-        }
-
-        /* Dashboard Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-box {
-            background: var(--body-bg);
-            padding: 25px;
-            border-radius: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
             text-align: center;
-            border: 1px solid rgba(0,0,0,0.05);
         }
-
-        .stat-box h3 {
-            font-size: 2.2em;
-            color: var(--primary-accent);
-            margin-bottom: 5px;
+        .stat-box {
+            background-color: #FFF0BE;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #FFB399;
         }
+        .stat-box h3 { margin: 0; font-size: 2em; color: #e09b85; }
+        .stat-box p { margin: 5px 0 0 0; font-weight: 600; }
+        
+        .quiz-container {
+            background: #f9f9f9; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #ddd;
+        }
+        .quiz-option {
+            margin-bottom: 10px;
+            display: block;
+            cursor: pointer;
+        }
+        .quiz-option input {
+            margin-right: 10px;
+        }
+        
+        .grammar-result-box {
+            margin-top: 15px; 
+            padding: 15px; 
+            background: #fafafa; 
+            border: 1px solid #eee;
+            border-radius: 8px; 
+            display: none;
+        }
+        .grammar-explanation {
+            background: rgba(224, 155, 133, 0.15); 
+            padding: 15px; 
+            border-radius: 6px; 
+            border-left: 4px solid #e09b85;
+            margin-top: 15px;
+        }
+        .grammar-explanation li { margin-bottom: 8px; }
 
-        .stat-box p {
-            margin-bottom: 0;
-            font-weight: 600;
-            font-size: 0.9em;
+        /* Tambahan styling untuk tombol audio agar rapi */
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
     </style>
 </head>
-
 <body>
-    <header class="header">
+
+    <header>
         <h1>Engleash</h1>
-        <p>Solusi Pintar Belajar Bahasa Inggris</p>
+        <p>Kuasai Bahasa Inggris Bertahap & Efektif</p>
     </header>
 
-    <nav class="app-nav">
-        <button class="nav-btn active" onclick="switchView('view-grammar', this)">✏️ Grammar</button>
-        <button class="nav-btn" onclick="switchView('view-audio', this)">🔊 Audio</button>
-        <button class="nav-btn" onclick="switchView('view-flashcard', this)">🎴 Flashcards</button>
-        <button class="nav-btn" onclick="switchView('view-quiz', this)">🎯 Kuis</button>
-        <button class="nav-btn" onclick="switchView('view-stats', this)">📊 Progres</button>
+    <nav>
+        <button class="tab-link active" onclick="openTab(event, 'Grammar')">Grammar & Ejaan</button>
+        <button class="tab-link" onclick="openTab(event, 'Audio')">Pengucapan (Audio)</button>
+        <button class="tab-link" onclick="openTab(event, 'Flashcard')">Flashcards</button>
+        <button class="tab-link" onclick="openTab(event, 'Kuis')">Kuis Harian</button>
+        <button class="tab-link" onclick="openTab(event, 'Progres')">Progres Saya</button>
     </nav>
 
     <main class="container">
         
-        <section id="view-grammar" class="learning-view active">
-            <div class="card">
-                <h2>Cek Grammar & Ejaan</h2>
-                <p>Ketik draf tulisan Anda untuk mendeteksi kesalahan tata bahasa secara instan.</p>
-                <textarea id="grammarInput" class="eng-textarea" rows="5" placeholder="Contoh: My teacher is very kindness..."></textarea>
-                <button class="action-btn" onclick="cekGrammar()">
-                    Periksa Teks
-                </button>
-                <div id="grammarResult" class="result-box"></div>
-            </div>
-        </section>
+        <div id="Grammar" class="tab-content active">
+            <h2>AI Grammar & Spelling Check</h2>
+            <p>Sistem AI kami akan mendeteksi kesalahan tata bahasa, ejaan, dan tanda baca secara otomatis.</p>
+            <textarea id="grammarText" rows="5" placeholder="Ketik teks bahasa Inggris di sini. Contoh: 'I has two apple but i doesn't wants to eat them.'"></textarea>
+            <button class="action-btn" onclick="cekGrammarAI()">✨ Analisis Teks</button>
+            <div id="grammarResult" class="grammar-result-box"></div>
+        </div>
 
-        <section id="view-audio" class="learning-view">
-            <div class="card">
-                <h2>Latihan Pengucapan</h2>
-                <p>Ketik kata yang sulit diucapkan, lalu klik ikon speaker untuk mendengar suara asli penutur bahasa Inggris.</p>
-                <input type="text" id="audioInput" class="eng-textarea" placeholder="Contoh: Entrepreneurship">
-                <button class="action-btn" onclick="ucapkanTeks()">
-                    🔊 Putar Suara
-                </button>
+        <div id="Audio" class="tab-content">
+            <h2>Latihan Pengucapan (Text-to-Speech)</h2>
+            <p>Ketik kata atau kalimat dalam bahasa Inggris, lalu dengarkan cara pengucapan yang benar.</p>
+            <input type="text" id="ttsText" placeholder="Contoh: Entrepreneurship">
+            
+            <div class="audio-controls">
+                <button class="action-btn" onclick="ucapkanTeks(1.0)">🔊 Kecepatan Normal</button>
+                <button class="action-btn" onclick="ucapkanTeks(0.6)">🐢 Kecepatan Pelan</button>
             </div>
-        </section>
+        </div>
 
-        <section id="view-flashcard" class="learning-view">
-            <div class="card">
-                <h2>Hafalan Kosakata</h2>
-                <p>Klik kartu untuk melihat terjemahannya, lalu klik tombol bawah untuk kata selanjutnya.</p>
-                <div class="flashcard-container" onclick="flipCard()">
-                    <div class="flashcard-inner">
-                        <div class="fc-side fc-front" id="fc-en">Inevitably</div>
-                        <div class="fc-side fc-back" id="fc-id">Tidak dapat dihindari</div>
+        <div id="Flashcard" class="tab-content">
+            <h2>Hafalan Kosakata (Flashcard)</h2>
+            <p>Klik kartu untuk melihat arti kata.</p>
+            <div class="flashcard" onclick="flipCard()">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <span id="fc-en">Perseverance</span>
+                    </div>
+                    <div class="flashcard-back">
+                        <span id="fc-id">Kegigihan / Ketekunan</span>
                     </div>
                 </div>
-                <button class="action-btn" style="width: 100%; justify-content: center;" onclick="nextCard()">
-                    Kata Berikutnya ➡️
-                </button>
             </div>
-        </section>
+            <button class="action-btn" onclick="nextCard()" style="width: 100%;">Kartu Selanjutnya ➡️</button>
+        </div>
 
-        <section id="view-quiz" class="learning-view">
-            <div class="card">
-                <h2>Kuis Harian</h2>
-                <p style="font-weight: bold; font-size: 1.2em;">"The report _____ by the team last night."</p>
+        <div id="Kuis" class="tab-content">
+            <h2>Kuis Harian Singkat</h2>
+            <p>Pilih jawaban yang paling tepat untuk melengkapi kalimat berikut:</p>
+            <div class="quiz-container">
+                <h3 id="q-text" style="margin-top:0;">Memuat soal...</h3>
                 
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="was finished"> A. was finished
-                </label>
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="is finish"> B. is finish
-                </label>
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="finishing"> C. finishing
-                </label>
-
-                <button class="action-btn" onclick="cekKuis()">Kirim Jawaban</button>
-                <div id="quizResult" class="result-box"></div>
+                <label class="quiz-option"><input type="radio" id="q-opt0" name="quiz" value="0"> <span id="l-opt0">Opsi A</span></label>
+                <label class="quiz-option"><input type="radio" id="q-opt1" name="quiz" value="1"> <span id="l-opt1">Opsi B</span></label>
+                <label class="quiz-option"><input type="radio" id="q-opt2" name="quiz" value="2"> <span id="l-opt2">Opsi C</span></label>
+                
+                <div style="margin-top: 15px;">
+                    <button class="action-btn" id="btn-cek" onclick="cekKuis()">Kirim Jawaban</button>
+                    <button class="action-btn" id="btn-next" style="display:none;" onclick="loadNextQuestion()">Soal Selanjutnya ➡️</button>
+                </div>
+                
+                <p id="kuisResult" style="margin-top:15px; font-weight: bold;"></p>
+                <p id="kuisProgress" style="font-size: 0.9em; color: #777; margin-top:10px;"></p>
             </div>
-        </section>
+        </div>
 
-        <section id="view-stats" class="learning-view">
-            <div class="card">
-                <h2>Dashboard Belajar</h2>
-                <p>Ringkasan aktivitas pembelajaran Anda hari ini.</p>
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <h3>14</h3>
-                        <p>Hari Beruntun 🔥</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3>85</h3>
-                        <p>Kosakata Baru 📚</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3>92%</h3>
-                        <p>Skor Rata-rata 🎯</p>
-                    </div>
+        <div id="Progres" class="tab-content">
+            <h2>Dashboard Pembelajaran</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3>12</h3>
+                    <p>Streak Hari 🔥</p>
+                </div>
+                <div class="stat-box">
+                    <h3 id="vocab-count">23</h3>
+                    <p>Kosakata Total 📚</p>
+                </div>
+                <div class="stat-box">
+                    <h3>85%</h3>
+                    <p>Akurasi Kuis 🎯</p>
                 </div>
             </div>
-        </section>
+        </div>
 
     </main>
 
     <script>
-        // Navigasi Antar Halaman Belajar
-        function switchView(viewId, btn) {
-            document.querySelectorAll('.learning-view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(viewId).classList.add('active');
-            btn.classList.add('active');
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
 
-        // Fitur 1: Grammar Check (Simulasi)
-        function cekGrammar() {
-            const input = document.getElementById('grammarInput').value;
+        // --- SISTEM GRAMMAR BERBASIS API AI ---
+        async function cekGrammarAI() {
+            const textInput = document.getElementById('grammarText').value;
             const res = document.getElementById('grammarResult');
-            if(!input) return alert("Ketik sesuatu!");
             
-            res.style.display = "block";
-            res.innerHTML = `<strong>Saran Perbaikan:</strong><br>
-                             Teks Anda terlihat bagus! Namun pastikan penggunaan kata sifat. 
-                             Contoh: 'My teacher is very <span style="color:var(--error)">kind</span>' (Gunakan <em>kind</em> bukan <em>kindness</em>).`;
-        }
-
-        // Fitur 2: Text-to-Speech
-        function ucapkanTeks() {
-            const text = document.getElementById('audioInput').value;
-            if(!text) return alert("Masukkan kata!");
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // Fitur 3: Flashcard Logic
-        function flipCard() {
-            document.querySelector('.flashcard-container').classList.toggle('flip');
-        }
-
-        const vocab = [
-            {en: "Inevitably", id: "Tidak dapat dihindari"},
-            {en: "Substantial", id: "Besar / Inti"},
-            {en: "Prosperous", id: "Makmur / Sejahtera"}
-        ];
-        let vIndex = 0;
-
-        function nextCard() {
-            const container = document.querySelector('.flashcard-container');
-            container.classList.remove('flip');
-            
-            setTimeout(() => {
-                vIndex = (vIndex + 1) % vocab.length;
-                document.getElementById('fc-en').innerText = vocab[vIndex].en;
-                document.getElementById('fc-id').innerText = vocab[vIndex].id;
-            }, 300);
-        }
-
-        // Fitur 4: Kuis
-        function cekKuis() {
-            const selected = document.querySelector('input[name="q1"]:checked');
-            const res = document.getElementById('quizResult');
-            if(!selected) return alert("Pilih satu!");
+            if(textInput.trim() === "") {
+                alert("Masukkan teks terlebih dahulu!"); return;
+            }
 
             res.style.display = "block";
-            if(selected.value === "was finished") {
-                res.innerHTML = "✅ <strong>Benar!</strong> Kalimat pasif lampau menggunakan 'was + V3'.";
-                res.style.borderLeftColor = "var(--success)";
-            } else {
-                res.innerHTML = "❌ <strong>Salah.</strong> Jawaban yang benar adalah 'was finished'.";
-                res.style.borderLeftColor = "var(--error)";
+            res.innerHTML = `<div style="text-align:center; padding: 20px; color:#555;">⏳ AI sedang menganalisis teks Anda...</div>`;
+
+            try {
+                const response = await fetch('https://api.languagetool.org/v2/check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        text: textInput,
+                        language: 'en-US' 
+                    })
+                });
+                
+                const data = await response.json();
+
+                if (data.matches.length === 0) {
+                    res.innerHTML = `
+                        <div style="margin-bottom: 12px;">
+                            <span style="font-size: 0.85em; color: #777; text-transform: uppercase; font-weight: bold;">Teks Anda:</span><br>
+                            <span style="font-size: 1.1em; color: #27ae60;">${textInput}</span>
+                        </div>
+                        <div style="padding: 10px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 6px; color: #2e7d32;">
+                            ✅ <strong>Sempurna!</strong> Teks Anda sudah benar secara Grammar dan Ejaan.
+                        </div>
+                    `;
+                } else {
+                    let correctedText = textInput;
+                    let explanationsHTML = "";
+
+                    let matches = data.matches.sort((a, b) => b.offset - a.offset);
+
+                    matches.forEach((match) => {
+                        if (match.replacements && match.replacements.length > 0) {
+                            const replacement = match.replacements[0].value;
+                            const errorWord = textInput.substring(match.offset, match.offset + match.length);
+                            
+                            correctedText = correctedText.substring(0, match.offset) + replacement + correctedText.substring(match.offset + match.length);
+
+                            explanationsHTML += `
+                                <li>
+                                    ❌ <em>${errorWord}</em> ➡️ ✅ <strong>${replacement}</strong><br>
+                                    <span style="font-size: 0.9em; color: #555;">💡 ${match.message}</span>
+                                </li>
+                            `;
+                        } else {
+                            const errorWord = textInput.substring(match.offset, match.offset + match.length);
+                            explanationsHTML += `
+                                <li>
+                                    ⚠️ Perhatikan kata: <em>${errorWord}</em><br>
+                                    <span style="font-size: 0.9em; color: #555;">💡 ${match.message}</span>
+                                </li>
+                            `;
+                        }
+                    });
+
+                    res.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <span style="font-size: 0.85em; color: #777; text-transform: uppercase; font-weight: bold;">❌ Teks Asli Anda:</span><br>
+                            <span style="font-size: 1.1em; text-decoration: line-through; color: #e74c3c;">${textInput}</span>
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <span style="font-size: 0.85em; color: #777; text-transform: uppercase; font-weight: bold;">✅ Versi Benar (Otomatis):</span><br>
+                            <strong style="font-size: 1.2em; color: #27ae60; background: #e8f5e9; padding: 2px 5px; border-radius: 4px;">${correctedText}</strong>
+                        </div>
+                        
+                        <div class="grammar-explanation">
+                            <span style="font-size: 1em; font-weight: bold; color: #b36b53;">📝 Penjelasan Kesalahan:</span>
+                            <ul style="margin-top: 10px; padding-left: 20px; color: #4a4a4a;">
+                                ${explanationsHTML}
+                            </ul>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                res.innerHTML = `<div style="color: red; font-weight: bold;">Terjadi kesalahan saat menghubungi server AI. Pastikan perangkat terhubung internet dan coba lagi nanti.</div>`;
             }
         }
 
-        // Registrasi Service Worker untuk PWA (DIBALIKKAN KEMBALI)
+        // --- SISTEM TEXT-TO-SPEECH (DIPERBARUI DENGAN KECEPATAN) ---
+        function ucapkanTeks(speed) {
+            const text = document.getElementById('ttsText').value;
+            if(text.trim() === "") {
+                alert("Masukkan teks bahasa Inggris yang ingin didengar!"); 
+                return;
+            }
+
+            // Hentikan suara yang mungkin sedang berjalan agar tidak bertumpuk
+            window.speechSynthesis.cancel();
+
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'en-US';
+            
+            // Atur kecepatan membaca (1.0 adalah normal, angka lebih kecil berarti lebih pelan)
+            speech.rate = speed; 
+
+            window.speechSynthesis.speak(speech);
+        }
+
+        // --- SISTEM FLASHCARD (+20 KARTU) ---
+        function flipCard() {
+            document.querySelector('.flashcard').classList.toggle('flip');
+        }
+
+        const cards = [
+            {en: "Perseverance", id: "Kegigihan / Ketekunan"},
+            {en: "Abundant", id: "Berlimpah"},
+            {en: "Inevitable", id: "Tidak bisa dihindari"},
+            {en: "Resilient", id: "Tangguh / Ulet"},
+            {en: "Meticulous", id: "Sangat Teliti"},
+            {en: "Ambiguous", id: "Bermakna Ganda"},
+            {en: "Eloquent", id: "Fasih (berbicara)"},
+            {en: "Frugal", id: "Hemat / Cermat"},
+            {en: "Procrastinate", id: "Menunda-nunda"},
+            {en: "Versatile", id: "Serba guna / Banyak Bisanya"},
+            {en: "Empathy", id: "Empati"},
+            {en: "Diligent", id: "Rajin / Tekun"},
+            {en: "Genuine", id: "Asli / Tulus"},
+            {en: "Obsolete", id: "Usang / Kuno"},
+            {en: "Profound", id: "Mendalam (pemikiran/makna)"},
+            {en: "Reluctant", id: "Enggan / Segan"},
+            {en: "Scrutinize", id: "Meneliti dengan cermat"},
+            {en: "Tenacious", id: "Keras kepala / Gigih"},
+            {en: "Unprecedented", id: "Belum pernah terjadi sebelumnya"},
+            {en: "Valid", id: "Sah / Berlaku"},
+            {en: "Wholesome", id: "Sehat / Bermanfaat"},
+            {en: "Yearn", id: "Mendambakan"},
+            {en: "Zealous", id: "Sangat antusias / Bersemangat"}
+        ];
+        let cardIndex = 0;
+
+        function nextCard() {
+            const card = document.querySelector('.flashcard');
+            card.classList.remove('flip'); 
+            setTimeout(() => {
+                cardIndex = (cardIndex + 1) % cards.length;
+                document.getElementById('fc-en').innerText = cards[cardIndex].en;
+                document.getElementById('fc-id').innerText = cards[cardIndex].id;
+            }, 300); 
+        }
+
+        document.getElementById('vocab-count').innerText = cards.length;
+
+        // --- SISTEM KUIS DINAMIS (+30 SOAL) ---
+        const quizData = [
+            { q: "I have been working here _____ 2020.", opts: ["for", "since", "in"], ans: 1, exp: "'Since' digunakan untuk titik awal waktu di masa lalu." },
+            { q: "She _____ to the market every morning.", opts: ["goes", "go", "going"], ans: 0, exp: "Subjek tunggal (She) menggunakan Verb 1 + s/es pada Simple Present Tense." },
+            { q: "They _____ playing football when it started to rain.", opts: ["were", "was", "are"], ans: 0, exp: "Subjek jamak (They) menggunakan 'were' untuk Past Continuous Tense." },
+            { q: "I am looking forward _____ you soon.", opts: ["to see", "seeing", "to seeing"], ans: 2, exp: "Frasa 'look forward to' selalu diikuti oleh V-ing (Gerund)." },
+            { q: "If it rains tomorrow, I _____ at home.", opts: ["will stay", "would stay", "stayed"], ans: 0, exp: "Conditional type 1 menggunakan format: If + Present, Future (will)." },
+            { q: "My brother is _____ than me.", opts: ["more tall", "taller", "tallest"], ans: 1, exp: "Adjective 1 suku kata (tall) ditambahkan -er untuk perbandingan (Comparative)." },
+            { q: "The book was written _____ a famous author.", opts: ["by", "from", "with"], ans: 0, exp: "Kalimat pasif selalu menggunakan kata depan 'by' untuk pelaku." },
+            { q: "I have never _____ to Japan.", opts: ["be", "went", "been"], ans: 2, exp: "Present Perfect Tense menggunakan Verb 3 (been)." },
+            { q: "He doesn't have _____ money left.", opts: ["many", "some", "any"], ans: 2, exp: "'Any' digunakan untuk kalimat negatif dan pertanyaan dengan benda yang tidak dapat dihitung." },
+            { q: "Can you tell me where _____?", opts: ["is the bank", "the bank is", "does the bank"], ans: 1, exp: "Pada kalimat tanya tidak langsung (Indirect Question), strukturnya menjadi subjek + verb." },
+            { q: "You _____ better study hard for the exam.", opts: ["had", "should", "would"], ans: 0, exp: "Frasa 'had better' digunakan untuk memberikan saran yang kuat." },
+            { q: "I am used _____ up early.", opts: ["to wake", "to waking", "wake"], ans: 1, exp: "'To be used to' diikuti oleh V-ing (terbiasa dengan suatu aktivitas)." },
+            { q: "Neither John _____ his friends are coming.", opts: ["or", "nor", "and"], ans: 1, exp: "Pasangan dari 'neither' selalu 'nor'." },
+            { q: "She has a lot of _____.", opts: ["experiences", "experience", "experiencing"], ans: 1, exp: "'Experience' dalam artian 'pengalaman hidup/kerja' adalah uncountable noun (tidak bisa ditambah -s)." },
+            { q: "I object _____ your proposal.", opts: ["to", "for", "with"], ans: 0, exp: "Kata kerja 'object' berpasangan dengan preposisi 'to'." },
+            { q: "The meeting was put _____ because of the storm.", opts: ["out", "up", "off"], ans: 2, exp: "Phrasal verb 'put off' berarti menunda." },
+            { q: "It is important that he _____ on time.", opts: ["arrives", "arrive", "arrived"], ans: 1, exp: "Subjunctive mood setelah 'important that' menggunakan Verb dasar tanpa -s/-es." },
+            { q: "She speaks English fluently, _____ she?", opts: ["does", "doesn't", "don't"], ans: 1, exp: "Question tag untuk kalimat positif Simple Present Tense dengan subjek 'She' adalah 'doesn't'." },
+            { q: "By this time next year, I _____ graduated.", opts: ["will have", "would have", "will"], ans: 0, exp: "Keterangan waktu 'By this time next year' menandakan Future Perfect Tense (will have + V3)." },
+            { q: "He denied _____ the money.", opts: ["stealing", "to steal", "steal"], ans: 0, exp: "Kata kerja 'deny' selalu diikuti oleh V-ing (Gerund)." },
+            { q: "The soup is _____ hot to eat.", opts: ["very", "too", "enough"], ans: 1, exp: "'Too' memberikan arti 'terlalu' sehingga bermakna negatif (tidak bisa dimakan)." },
+            { q: "He is interested _____ learning new languages.", opts: ["on", "in", "about"], ans: 1, exp: "Kata sifat 'interested' berpasangan dengan preposisi 'in'." },
+            { q: "I wish I _____ a millionaire.", opts: ["am", "was", "were"], ans: 2, exp: "Setelah 'wish', to be yang digunakan untuk semua subjek selalu 'were' (Unreal condition)." },
+            { q: "There are _____ apples on the table.", opts: ["much", "a little", "a few"], ans: 2, exp: "Apples adalah benda yang dapat dihitung (Countable), jadi menggunakan 'a few'." },
+            { q: "She apologized _____ being late.", opts: ["for", "to", "about"], ans: 0, exp: "Meminta maaf atas suatu tindakan menggunakan 'apologize for'." },
+            { q: "I saw him _____ the street.", opts: ["cross", "crossed", "to cross"], ans: 0, exp: "Verb of perception (saw) diikuti Verb 1 untuk menunjukkan aksi tersebut disaksikan secara utuh." },
+            { q: "The news _____ surprisingly good.", opts: ["is", "are", "were"], ans: 0, exp: "Kata 'News' adalah uncountable noun tunggal, sehingga to be-nya 'is'." },
+            { q: "Make sure you _____ off the lights.", opts: ["turn", "turns", "turned"], ans: 0, exp: "Kalimat perintah (imperative) selalu menggunakan Verb 1 dasar." },
+            { q: "He prefers tea _____ coffee.", opts: ["than", "to", "over"], ans: 1, exp: "Kata kerja 'prefer' berpasangan dengan kata sambung 'to'." },
+            { q: "Hardly _____ closed my eyes when the phone rang.", opts: ["had I", "I had", "did I"], ans: 0, exp: "Inversi: Ketika 'Hardly' di depan kalimat, strukturnya dibalik menjadi 'had + S + V3'." },
+            { q: "It's no use _____ over spilled milk.", opts: ["crying", "to cry", "cry"], ans: 0, exp: "Frasa idiom 'It's no use' selalu diikuti oleh V-ing." }
+        ];
+
+        let currentQuiz = 0;
+
+        function renderQuiz() {
+            const qData = quizData[currentQuiz];
+            document.getElementById('q-text').innerText = (currentQuiz + 1) + ". " + qData.q;
+            
+            for(let i=0; i<3; i++) {
+                document.getElementById('q-opt'+i).checked = false;
+                document.getElementById('l-opt'+i).innerText = qData.opts[i];
+            }
+            
+            document.getElementById('kuisResult').innerText = "";
+            document.getElementById('btn-cek').style.display = "inline-block";
+            document.getElementById('btn-next').style.display = "none";
+            document.getElementById('kuisProgress').innerText = `Soal ${currentQuiz + 1} dari ${quizData.length}`;
+        }
+
+        function cekKuis() {
+            const answer = document.querySelector('input[name="quiz"]:checked');
+            const res = document.getElementById('kuisResult');
+            
+            if(!answer) {
+                res.style.color = "red";
+                res.innerText = "Silakan pilih jawaban terlebih dahulu.";
+                return;
+            }
+            
+            const qData = quizData[currentQuiz];
+            if(parseInt(answer.value) === qData.ans) {
+                res.style.color = "green";
+                res.innerText = "Benar! " + qData.exp;
+            } else {
+                res.style.color = "red";
+                res.innerText = "Salah. Jawaban yang benar adalah '" + qData.opts[qData.ans] + "'. " + qData.exp;
+            }
+
+            document.getElementById('btn-cek').style.display = "none";
+            document.getElementById('btn-next').style.display = "inline-block";
+        }
+
+        function loadNextQuestion() {
+            currentQuiz++;
+            if (currentQuiz >= quizData.length) {
+                currentQuiz = 0; 
+                alert("Selamat! Anda telah menyelesaikan semua soal kuis. Kuis akan diulang dari awal.");
+            }
+            renderQuiz();
+        }
+
+        window.onload = function() {
+            renderQuiz();
+        };
+
+        // PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
-                    .then(() => console.log('Service Worker registered'))
-                    .catch(err => console.error('Service Worker error:', err));
+                    .then(() => console.log('SW terdaftar'))
+                    .catch(err => console.error('SW gagal:', err));
             });
         }
     </script>
 </body>
-
 </html>
