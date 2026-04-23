@@ -1,339 +1,468 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#6366f1" />
-    <link rel="icon" href="icons/logo.png" type="image/png" /> 
-    <!-- ini untuk icon -->
-    <link rel="manifest" href="manifest.json">
-    <title>Engleash - Belajar Bahasa Inggris</title>
+    <meta name="theme-color" content="#FFB399" />
+    <link rel="icon" href="icons/icon-192x192-A.png" type="image/png" /> 
+    <link rel="manifest" href="manifest.json"> 
+    
+    <title>Engleash - Master Your English</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Desain dan Gaya Tampilan Sesuai Request */
-        body {
-            font-family: 'Roboto Slab', serif;
-            background-color: #FFF0BE; /* Warna background dari screenshot */
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
         }
 
-        header {
-            background-color: #FFB399; /* Warna latar head dari screenshot */
-            padding: 20px;
+        :root {
+            --header-bg: #FFB399;
+            --body-bg: #FFF0BE;
+            --card-bg: #ffffff;
+            --primary-accent: #e09b85;
+            --text-main: #2c3e50;
+            --text-muted: #5a5a5a;
+            --success: #27ae60;
+            --error: #e74c3c;
+        }
+
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* Header Style */
+        .header {
+            background-color: var(--header-bg);
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid rgba(0,0,0,0.05);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #2c3e50;
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 5px;
         }
 
-        header p {
-            margin: 5px 0 0 0;
+        .header p {
             font-size: 1.1em;
-            color: #4a4a4a;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
-        nav {
+        /* Navigation Style */
+        .app-nav {
+            background-color: var(--primary-accent);
             display: flex;
             justify-content: center;
-            background-color: #e09b85;
+            gap: 5px;
+            overflow-x: auto;
             padding: 10px;
-            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        nav button {
-            background-color: transparent;
+        .nav-btn {
+            background: transparent;
             border: none;
+            color: white;
+            padding: 10px 20px;
             font-family: inherit;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 600;
-            color: #fff;
-            padding: 10px 15px;
             cursor: pointer;
+            border-radius: 8px;
             transition: 0.3s;
+            white-space: nowrap;
         }
 
-        nav button:hover, nav button.active {
-            background-color: #fff;
-            color: #e09b85;
-            border-radius: 5px;
+        .nav-btn:hover, .nav-btn.active {
+            background-color: white;
+            color: var(--primary-accent);
         }
 
         .container {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .tab-content {
+        /* Learning Views Management */
+        .learning-view {
             display: none;
+            animation: fadeIn 0.4s ease;
         }
 
-        .tab-content.active {
+        .learning-view.active {
             display: block;
         }
 
-        /* Styling Komponen */
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            font-family: inherit;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        button.action-btn {
-            background-color: #FFB399;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
+        /* Card Component */
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(224, 155, 133, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--primary-accent);
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        /* Input Elements */
+        .eng-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
             font-family: inherit;
-            font-weight: bold;
-            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            background: #fdfdfd;
+        }
+
+        .eng-textarea:focus {
+            outline: none;
+            border-color: var(--header-bg);
+        }
+
+        .action-btn {
+            background-color: var(--header-bg);
+            color: var(--text-main);
+            border: none;
+            padding: 12px 25px;
+            font-family: inherit;
+            font-weight: 700;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        button.action-btn:hover {
-            background-color: #e09b85;
-            color: #fff;
+        .action-btn:hover {
+            background-color: var(--primary-accent);
+            color: white;
+            transform: translateY(-2px);
         }
 
-        /* Flashcard Styling */
-        .flashcard {
-            width: 100%;
-            height: 200px;
+        /* Flashcard Component */
+        .flashcard-container {
             perspective: 1000px;
-            margin: 20px 0;
+            height: 250px;
+            margin-bottom: 25px;
             cursor: pointer;
         }
+
         .flashcard-inner {
+            position: relative;
             width: 100%;
             height: 100%;
             transition: transform 0.6s;
             transform-style: preserve-3d;
-            position: relative;
         }
-        .flashcard.flip .flashcard-inner {
+
+        .flashcard-container.flip .flashcard-inner {
             transform: rotateY(180deg);
         }
-        .flashcard-front, .flashcard-back {
+
+        .fc-side {
+            position: absolute;
             width: 100%;
             height: 100%;
-            position: absolute;
             backface-visibility: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2em;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-weight: 700;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .flashcard-front {
-            background-color: #f9f9f9;
-            color: #333;
-            border: 2px solid #FFB399;
+
+        .fc-front {
+            background: #fcfcfc;
+            color: var(--text-main);
+            border: 3px solid var(--header-bg);
         }
-        .flashcard-back {
-            background-color: #FFB399;
-            color: #fff;
+
+        .fc-back {
+            background: var(--header-bg);
+            color: white;
             transform: rotateY(180deg);
         }
 
-        /* Dashboard Styling */
+        /* Result Box */
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            border-left: 5px solid var(--primary-accent);
+            display: none;
+        }
+
+        /* Quiz UI */
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--header-bg);
+            background: rgba(255, 179, 153, 0.1);
+        }
+
+        .quiz-option input {
+            margin-right: 15px;
+            accent-color: var(--primary-accent);
+        }
+
+        /* Dashboard Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            text-align: center;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
         }
+
         .stat-box {
-            background-color: #FFF0BE;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #FFB399;
+            background: var(--body-bg);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .stat-box h3 { margin: 0; font-size: 2em; color: #e09b85; }
-        .stat-box p { margin: 5px 0 0 0; font-weight: 600; }
+
+        .stat-box h3 {
+            font-size: 2.2em;
+            color: var(--primary-accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-box p {
+            margin-bottom: 0;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
     </style>
 </head>
-<body>
 
-    <header>
+<body>
+    <header class="header">
         <h1>Engleash</h1>
-        <p>Kuasai Bahasa Inggris Bertahap & Efektif</p>
+        <p>Solusi Pintar Belajar Bahasa Inggris</p>
     </header>
 
-    <nav>
-        <button class="tab-link active" onclick="openTab(event, 'Grammar')">Grammar & Ejaan</button>
-        <button class="tab-link" onclick="openTab(event, 'Audio')">Pengucapan (Audio)</button>
-        <button class="tab-link" onclick="openTab(event, 'Flashcard')">Flashcards</button>
-        <button class="tab-link" onclick="openTab(event, 'Kuis')">Kuis Harian</button>
-        <button class="tab-link" onclick="openTab(event, 'Progres')">Progres Saya</button>
+    <nav class="app-nav">
+        <button class="nav-btn active" onclick="switchView('view-grammar', this)">✏️ Grammar</button>
+        <button class="nav-btn" onclick="switchView('view-audio', this)">🔊 Audio</button>
+        <button class="nav-btn" onclick="switchView('view-flashcard', this)">🎴 Flashcards</button>
+        <button class="nav-btn" onclick="switchView('view-quiz', this)">🎯 Kuis</button>
+        <button class="nav-btn" onclick="switchView('view-stats', this)">📊 Progres</button>
     </nav>
 
     <main class="container">
         
-        <div id="Grammar" class="tab-content active">
-            <h2>Cek Grammar & Ejaan</h2>
-            <p>Ketik kalimat bahasa Inggris Anda di bawah ini, kami akan membantu mengeceknya.</p>
-            <textarea id="grammarText" rows="5" placeholder="Contoh: She go to school everyday..."></textarea>
-            <button class="action-btn" onclick="cekGrammar()">Periksa Teks</button>
-            <div id="grammarResult" style="margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 5px; display: none;">
-                </div>
-        </div>
+        <section id="view-grammar" class="learning-view active">
+            <div class="card">
+                <h2>Cek Grammar & Ejaan</h2>
+                <p>Ketik draf tulisan Anda untuk mendeteksi kesalahan tata bahasa secara instan.</p>
+                <textarea id="grammarInput" class="eng-textarea" rows="5" placeholder="Contoh: My teacher is very kindness..."></textarea>
+                <button class="action-btn" onclick="cekGrammar()">
+                    Periksa Teks
+                </button>
+                <div id="grammarResult" class="result-box"></div>
+            </div>
+        </section>
 
-        <div id="Audio" class="tab-content">
-            <h2>Latihan Pengucapan (Text-to-Speech)</h2>
-            <p>Ketik kata atau kalimat dalam bahasa Inggris, lalu dengarkan cara pengucapan yang benar.</p>
-            <input type="text" id="ttsText" placeholder="Contoh: Pronunciation">
-            <button class="action-btn" onclick="ucapkanTeks()">🔊 Dengarkan</button>
-        </div>
+        <section id="view-audio" class="learning-view">
+            <div class="card">
+                <h2>Latihan Pengucapan</h2>
+                <p>Ketik kata yang sulit diucapkan, lalu klik ikon speaker untuk mendengar suara asli penutur bahasa Inggris.</p>
+                <input type="text" id="audioInput" class="eng-textarea" placeholder="Contoh: Entrepreneurship">
+                <button class="action-btn" onclick="ucapkanTeks()">
+                    🔊 Putar Suara
+                </button>
+            </div>
+        </section>
 
-        <div id="Flashcard" class="tab-content">
-            <h2>Hafalan Kosakata (Flashcard)</h2>
-            <p>Klik kartu untuk melihat arti kata.</p>
-            <div class="flashcard" onclick="flipCard()">
-                <div class="flashcard-inner">
-                    <div class="flashcard-front">
-                        <span id="fc-en">Perseverance</span>
+        <section id="view-flashcard" class="learning-view">
+            <div class="card">
+                <h2>Hafalan Kosakata</h2>
+                <p>Klik kartu untuk melihat terjemahannya, lalu klik tombol bawah untuk kata selanjutnya.</p>
+                <div class="flashcard-container" onclick="flipCard()">
+                    <div class="flashcard-inner">
+                        <div class="fc-side fc-front" id="fc-en">Inevitably</div>
+                        <div class="fc-side fc-back" id="fc-id">Tidak dapat dihindari</div>
                     </div>
-                    <div class="flashcard-back">
-                        <span id="fc-id">Kegigihan / Ketekunan</span>
+                </div>
+                <button class="action-btn" style="width: 100%; justify-content: center;" onclick="nextCard()">
+                    Kata Berikutnya ➡️
+                </button>
+            </div>
+        </section>
+
+        <section id="view-quiz" class="learning-view">
+            <div class="card">
+                <h2>Kuis Harian</h2>
+                <p style="font-weight: bold; font-size: 1.2em;">"The report _____ by the team last night."</p>
+                
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="was finished"> A. was finished
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="is finish"> B. is finish
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="finishing"> C. finishing
+                </label>
+
+                <button class="action-btn" onclick="cekKuis()">Kirim Jawaban</button>
+                <div id="quizResult" class="result-box"></div>
+            </div>
+        </section>
+
+        <section id="view-stats" class="learning-view">
+            <div class="card">
+                <h2>Dashboard Belajar</h2>
+                <p>Ringkasan aktivitas pembelajaran Anda hari ini.</p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h3>14</h3>
+                        <p>Hari Beruntun 🔥</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>85</h3>
+                        <p>Kosakata Baru 📚</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>92%</h3>
+                        <p>Skor Rata-rata 🎯</p>
                     </div>
                 </div>
             </div>
-            <button class="action-btn" onclick="nextCard()">Kartu Selanjutnya ➡️</button>
-        </div>
-
-        <div id="Kuis" class="tab-content">
-            <h2>Kuis Harian Singkat</h2>
-            <p>Pilih jawaban yang paling tepat untuk melengkapi kalimat berikut:</p>
-            <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #ddd;">
-                <h3 style="margin-top:0;">"I have been working here _____ 2020."</h3>
-                <input type="radio" id="q1a" name="q1" value="for"> <label for="q1a">A. for</label><br><br>
-                <input type="radio" id="q1b" name="q1" value="since"> <label for="q1b">B. since</label><br><br>
-                <input type="radio" id="q1c" name="q1" value="in"> <label for="q1c">C. in</label><br><br>
-                <button class="action-btn" style="margin-top: 15px;" onclick="cekKuis()">Kirim Jawaban</button>
-                <p id="kuisResult" style="font-weight: bold; margin-bottom:0;"></p>
-            </div>
-        </div>
-
-        <div id="Progres" class="tab-content">
-            <h2>Dashboard Pembelajaran</h2>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <h3>12</h3>
-                    <p>Streak Hari 🔥</p>
-                </div>
-                <div class="stat-box">
-                    <h3>150</h3>
-                    <p>Kosakata Baru 📚</p>
-                </div>
-                <div class="stat-box">
-                    <h3>85%</h3>
-                    <p>Akurasi Kuis 🎯</p>
-                </div>
-            </div>
-        </div>
+        </section>
 
     </main>
 
     <script>
-        // Logika untuk Pindah Tab
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            tablinks = document.getElementsByClassName("tab-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+        // Navigasi Antar Halaman Belajar
+        function switchView(viewId, btn) {
+            document.querySelectorAll('.learning-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(viewId).classList.add('active');
+            btn.classList.add('active');
         }
 
-        // Logika Simulasi Grammar Cek
+        // Fitur 1: Grammar Check (Simulasi)
         function cekGrammar() {
-            const text = document.getElementById('grammarText').value;
+            const input = document.getElementById('grammarInput').value;
             const res = document.getElementById('grammarResult');
-            if(text.trim() === "") {
-                alert("Masukkan teks terlebih dahulu!");
-                return;
-            }
+            if(!input) return alert("Ketik sesuatu!");
+            
             res.style.display = "block";
-            // Simulasi perbaikan
-            res.innerHTML = "<strong>Saran Perbaikan:</strong><br>Pastikan subjek dan kata kerja sesuai. Contoh: 'She <em>goes</em> to school everyday.' <br><br><em>(Catatan: Ini adalah simulasi. Versi aslinya akan menggunakan API AI untuk mengoreksi teks ini.)</em>";
+            res.innerHTML = `<strong>Saran Perbaikan:</strong><br>
+                             Teks Anda terlihat bagus! Namun pastikan penggunaan kata sifat. 
+                             Contoh: 'My teacher is very <span style="color:var(--error)">kind</span>' (Gunakan <em>kind</em> bukan <em>kindness</em>).`;
         }
 
-        // Logika Text-to-Speech (Berfungsi Penuh!)
+        // Fitur 2: Text-to-Speech
         function ucapkanTeks() {
-            const text = document.getElementById('ttsText').value;
-            if(text.trim() === "") {
-                alert("Masukkan teks bahasa Inggris yang ingin didengar!");
-                return;
-            }
-            const speech = new SpeechSynthesisUtterance(text);
-            speech.lang = 'en-US'; // Setting logat Bahasa Inggris Amerika
-            window.speechSynthesis.speak(speech);
+            const text = document.getElementById('audioInput').value;
+            if(!text) return alert("Masukkan kata!");
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.speak(utterance);
         }
 
-        // Logika Flashcard
+        // Fitur 3: Flashcard Logic
         function flipCard() {
-            document.querySelector('.flashcard').classList.toggle('flip');
+            document.querySelector('.flashcard-container').classList.toggle('flip');
         }
 
-        const cards = [
-            {en: "Perseverance", id: "Kegigihan / Ketekunan"},
-            {en: "Abundant", id: "Berlimpah"},
-            {en: "Inevitable", id: "Tidak bisa dihindari"}
+        const vocab = [
+            {en: "Inevitably", id: "Tidak dapat dihindari"},
+            {en: "Substantial", id: "Besar / Inti"},
+            {en: "Prosperous", id: "Makmur / Sejahtera"}
         ];
-        let cardIndex = 0;
+        let vIndex = 0;
 
         function nextCard() {
-            const card = document.querySelector('.flashcard');
-            card.classList.remove('flip'); // Kembalikan ke depan
+            const container = document.querySelector('.flashcard-container');
+            container.classList.remove('flip');
             
             setTimeout(() => {
-                cardIndex = (cardIndex + 1) % cards.length;
-                document.getElementById('fc-en').innerText = cards[cardIndex].en;
-                document.getElementById('fc-id').innerText = cards[cardIndex].id;
-            }, 300); // Tunggu animasi flip selesai sebelum ganti teks
+                vIndex = (vIndex + 1) % vocab.length;
+                document.getElementById('fc-en').innerText = vocab[vIndex].en;
+                document.getElementById('fc-id').innerText = vocab[vIndex].id;
+            }, 300);
         }
 
-        // Logika Kuis Harian
+        // Fitur 4: Kuis
         function cekKuis() {
-            const answer = document.querySelector('input[name="q1"]:checked');
-            const res = document.getElementById('kuisResult');
-            if(!answer) {
-                res.style.color = "red";
-                res.innerText = "Silakan pilih jawaban terlebih dahulu.";
-                return;
-            }
-            
-            if(answer.value === "since") {
-                res.style.color = "green";
-                res.innerText = "Benar! 'Since' digunakan untuk titik awal waktu di masa lalu.";
+            const selected = document.querySelector('input[name="q1"]:checked');
+            const res = document.getElementById('quizResult');
+            if(!selected) return alert("Pilih satu!");
+
+            res.style.display = "block";
+            if(selected.value === "was finished") {
+                res.innerHTML = "✅ <strong>Benar!</strong> Kalimat pasif lampau menggunakan 'was + V3'.";
+                res.style.borderLeftColor = "var(--success)";
             } else {
-                res.style.color = "red";
-                res.innerText = "Kurang tepat. Jawaban yang benar adalah 'since'.";
+                res.innerHTML = "❌ <strong>Salah.</strong> Jawaban yang benar adalah 'was finished'.";
+                res.style.borderLeftColor = "var(--error)";
             }
+        }
+
+        // Registrasi Service Worker untuk PWA (DIBALIKKAN KEMBALI)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(err => console.error('Service Worker error:', err));
+            });
         }
     </script>
 </body>
+
 </html>
